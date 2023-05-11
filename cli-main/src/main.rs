@@ -1,5 +1,4 @@
 mod password_manager;
-mod auth;
 mod backup;
 mod db;
 mod utils;
@@ -9,21 +8,6 @@ use password_manager::PasswordManager;
 fn main() {
     // Create a new PasswordManager instance
     let mut pm = PasswordManager::new();
-
-    // Authenticate the user
-    if !auth::authenticate(&mut pm) {
-        println!("Authentication failed. Exiting...");
-        return;
-    }
-
-    // Load the password database
-    if let Err(e) = db::load_database(&mut pm) {
-        println!("Failed to load database: {}", e);
-        return;
-    }
-
-    // Perform any necessary backup or restore operations
-    backup::do_backup(&mut pm);
 
     // Process command-line arguments
     let args: Vec<String> = std::env::args().skip(1).collect();
